@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_DdZocL47EeOQo_IRkjDF6w" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="loanApproval" name="grh" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1" name="License Request&#10;Received">
+      <bpmn2:outgoing>Flow_01424s2</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:endEvent id="EndEvent_1" name="License for Bundesliga approved">
+      <bpmn2:incoming>Flow_09s7n9w</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:userTask id="Task_0dfv74n" name="Check the request" camunda:assignee="demo">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="budget" label="Budget" type="long" />
+        </camunda:formData>
+        <camunda:taskListener delegateExpression="#{requestExecutionListener}" event="complete" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_01424s2</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_025xhkf</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:endEvent id="Event_0kmf004" name="License for 2. Bundesliga approved">
+      <bpmn2:incoming>Flow_0rz1eff</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_025xhkf" sourceRef="Task_0dfv74n" targetRef="Gateway_0lgf4z6" />
+    <bpmn2:sequenceFlow id="Flow_09s7n9w" name="Yes" sourceRef="Gateway_0lgf4z6" targetRef="EndEvent_1">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${budget&gt;200}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_0rz1eff" name="No" sourceRef="Gateway_0lgf4z6" targetRef="Event_0kmf004" />
+    <bpmn2:endEvent id="Event_1l9j43z" name="Forced Relegation to 3. Liga">
+      <bpmn2:incoming>Flow_0t1tqqq</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:boundaryEvent id="Event_1fzor0z" name="Contract Check Duration" attachedToRef="Task_0dfv74n">
+      <bpmn2:outgoing>Flow_0t1tqqq</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_1fac3vj">
+        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">PT10M</bpmn2:timeDuration>
+      </bpmn2:timerEventDefinition>
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="Flow_0t1tqqq" name="Time is up" sourceRef="Event_1fzor0z" targetRef="Event_1l9j43z" />
+    <bpmn2:exclusiveGateway id="Gateway_0lgf4z6" name="Is ready for Bundesliga?" default="Flow_0rz1eff">
+      <bpmn2:incoming>Flow_025xhkf</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0rz1eff</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_09s7n9w</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_01424s2" sourceRef="StartEvent_1" targetRef="Task_0dfv74n" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="loanApproval">
+      <bpmndi:BPMNEdge id="Flow_0t1tqqq_di" bpmnElement="Flow_0t1tqqq">
+        <di:waypoint x="674" y="190" />
+        <di:waypoint x="674" y="400" />
+        <di:waypoint x="892" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="684" y="298" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rz1eff_di" bpmnElement="Flow_0rz1eff">
+        <di:waypoint x="810" y="157" />
+        <di:waypoint x="810" y="260" />
+        <di:waypoint x="892" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="818" y="206" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09s7n9w_di" bpmnElement="Flow_09s7n9w">
+        <di:waypoint x="835" y="132" />
+        <di:waypoint x="892" y="132" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="856" y="114" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_025xhkf_di" bpmnElement="Flow_025xhkf">
+        <di:waypoint x="724" y="132" />
+        <di:waypoint x="785" y="132" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01424s2_di" bpmnElement="Flow_01424s2">
+        <di:waypoint x="218" y="132" />
+        <di:waypoint x="624" y="132" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="114" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="160" y="150" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_1">
+        <dc:Bounds x="892" y="114" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="883" y="150" width="56" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0k9otqc_di" bpmnElement="Task_0dfv74n">
+        <dc:Bounds x="624" y="92" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kmf004_di" bpmnElement="Event_0kmf004">
+        <dc:Bounds x="892" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="877" y="285" width="67" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1l9j43z_di" bpmnElement="Event_1l9j43z">
+        <dc:Bounds x="892" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="865" y="425" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0lgf4z6_di" bpmnElement="Gateway_0lgf4z6" isMarkerVisible="true">
+        <dc:Bounds x="785" y="107" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="782" y="77" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08y678d_di" bpmnElement="Event_1fzor0z">
+        <dc:Bounds x="656" y="154" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="636" y="197" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
