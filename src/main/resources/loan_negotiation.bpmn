@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1ks5vg1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <bpmn:process id="negotiate_contracts" name="Negotiate Contracts" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Contract renegotation required">
+      <bpmn:outgoing>Flow_0vjt847</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0eka20b" name="Contract renegotation resolved">
+      <bpmn:incoming>Flow_060h301</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0vjt847" sourceRef="StartEvent_1" targetRef="negotiate_salary" />
+    <bpmn:sequenceFlow id="Flow_060h301" sourceRef="negotiate_salary" targetRef="Event_0eka20b" />
+    <bpmn:userTask id="negotiate_salary" name="Negotiate salary">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="goalkeeper_salary" label="Goalkeeper Salary" type="long" defaultValue="${goalkeeper_salary}" />
+          <camunda:formField id="defense_salary" label="Defense Salary" type="long" />
+          <camunda:formField id="midfield_salary" label="Midfield Salary" type="long" />
+          <camunda:formField id="forward_salary" label="Forward Salary" type="long" />
+          <camunda:formField id="club_name" label="Club Name" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vjt847</bpmn:incoming>
+      <bpmn:outgoing>Flow_060h301</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="negotiate_contracts">
+      <bpmndi:BPMNEdge id="Flow_060h301_di" bpmnElement="Flow_060h301">
+        <di:waypoint x="380" y="120" />
+        <di:waypoint x="462" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vjt847_di" bpmnElement="Flow_0vjt847">
+        <di:waypoint x="208" y="120" />
+        <di:waypoint x="280" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="160" y="145" width="62" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0eka20b_di" bpmnElement="Event_0eka20b">
+        <dc:Bounds x="462" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="450" y="145" width="62" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1yk2650_di" bpmnElement="negotiate_salary">
+        <dc:Bounds x="280" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
