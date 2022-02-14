@@ -28,13 +28,13 @@
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
-            <version>7.14.5-ee</version>
+            <version>7.16.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-webapp-ee</artifactId>
-            <version>7.14.5-ee</version>
+            <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+            <version>7.16.0</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -67,7 +67,7 @@
         </plugins>
     </build>
 
-    <repositories>
+<!--    <repositories>
         <repository>
             <id>camunda-bpm-nexus-ee</id>
             <name>camunda-bpm-nexus</name>
@@ -78,6 +78,6 @@
             <name>camunda-bpm-nexus</name>
             <url>https://app.camunda.com/nexus/repositories</url>
         </repository>
-    </repositories>
+    </repositories>-->
 
 </project>
